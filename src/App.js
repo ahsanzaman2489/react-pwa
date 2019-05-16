@@ -1,23 +1,29 @@
 import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
-import './App.css';
+
+import './style.css';
+
+
 import logo from './logo.svg';
 
-// import Header from "./components/header";
+import Header from "./components/Header";
 // import Footer from "./components/footer";
 
 import HomePage from "./pages/Home";
+import NewsPage from "./pages/News";
 
 
 export default () => {
     return (
         <div>
-            {/*<Header src={logo}/>*/}
+
             <Router>
+                <Header src={logo}/>
                 <Switch>
-                    <Redirect exact from="/" to="/Home"/>
-                    <Route exact path={'/Home'} component={HomePage}/>
+                    <Redirect exact from="/" to="/home"/>
+                    <Route exact path={'/home'} component={HomePage}/>
+                    <Route exact path={'/news'} component={NewsPage}/>
                     {/*<Route path={'/cars/detail/:stockNumber'} component={CarDetailContainer}/>*/}
                     {/*<Route path="*" component={NotFoundComponent}/>*/}
                 </Switch>
