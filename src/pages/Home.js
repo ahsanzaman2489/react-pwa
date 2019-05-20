@@ -6,7 +6,7 @@ import * as NewsActions from '../actions/News';
 // import {NO_DATA} from '../../constants/app';
 
 
-export class HomePage extends Component {
+class HomePage extends Component {
     state = {
 
     };
