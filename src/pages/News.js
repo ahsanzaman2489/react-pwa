@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as NewsActions from '../actions/News';
+import * as NewsActions from '../actions/newsActions';
 
 // import {NO_DATA} from '../../constants/app';
 
