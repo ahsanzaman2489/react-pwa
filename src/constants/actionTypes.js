@@ -1,0 +1,3 @@
+export const ACTION_LOADING = 'ACTION_LOADING';
+export const HEADLINE_LIST = 'HEADLINE_LIST';
+export const SOURCES_LIST = 'SOURCES_LIST';
