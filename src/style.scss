@@ -4,3 +4,16 @@ header {
     text-transform: capitalize;
   }
 }
+
+.blockquote-footer {
+  color: #ff0000;
+  margin-bottom: 10px;
+}
+
+.card-columns {
+  margin-top: 25px;
+
+  .card {
+    margin-bottom: 1.4rem;
+  }
+}

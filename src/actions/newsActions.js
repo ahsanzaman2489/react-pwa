@@ -3,9 +3,18 @@ import newsService from '../service';
 
 const service = newsService();
 
-export const newsList = (endPoint, query) => (dispatch) => {
-    dispatch({type: actionTypes.LOADING_CARS, isLoading: true});
+const serviceHandler = (endPoint, query, dispatch, actionType) => {
     return service.fetch(endPoint, query).then((payload) => {
-        dispatch({type: actionTypes.CARS_LIST, payload});
+        dispatch({type: actionType, payload: payload.data});
     });
+};
+
+export const fetchHeadLines = (endPoint, query) => (dispatch) => {
+    dispatch({type: actionTypes.ACTION_LOADING, isLoading: true});
+    serviceHandler(endPoint, query, dispatch, actionTypes.HEADLINE_LIST);
+};
+
+export const fetchNewsSources = (endPoint, query) => (dispatch) => {
+    dispatch({type: actionTypes.ACTION_LOADING, isLoading: true});
+    serviceHandler(endPoint, query, dispatch, actionTypes.SOURCES_LIST);
 };

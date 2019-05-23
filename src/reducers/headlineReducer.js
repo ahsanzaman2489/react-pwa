@@ -1,9 +1,8 @@
 export default (state = {}, action) => {
     switch (action.type) {
-        case 'SIMPLE_ACTION':
-            return {
-                result: action.payload
-            };
+        case 'HEADLINE_LIST':
+            console.log(action);
+            return state = {...action.payload};
         default:
             return state
     }

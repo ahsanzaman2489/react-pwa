@@ -1,5 +1,3 @@
-export const CARS_LIST = 'CARS_LIST';
-export const LOADING_CARS= 'LOADING_CARS';
-export const COLORS_LIST = 'COLORS_LIST';
-export const MANUFACTURERS_LIST = 'MANUFACTURERS_LIST';
-export const CAR_DETAIL = 'CAR_DETAIL';
+export const ACTION_LOADING = 'ACTION_LOADING';
+export const HEADLINE_LIST = 'HEADLINE_LIST';
+export const SOURCES_LIST = 'SOURCES_LIST';
