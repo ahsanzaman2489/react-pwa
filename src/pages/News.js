@@ -64,8 +64,8 @@ export class NewsPage extends Component {
 
 
     render() {
-
-        const {news, location} = this.props;
+        console.log(this.props)
+        const {news, location,history} = this.props;
         const renderNews = (data) => {
 
             return data.map((article, index) => {
@@ -83,9 +83,12 @@ export class NewsPage extends Component {
                     <CardColumns>
                         {news.data && renderNews(news.data.articles)}
                     </CardColumns>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <PagingComponent location={location} url={'/news'}/>
-                    </Suspense>
+                    {news.data && <Suspense fallback={<div>Loading...</div>}>
+                        <PagingComponent location={location} url={'/news'} totalItemsCount={news.data.totalResults}
+                                         itemsCountPerPage={20}
+                                         history={history}
+                        />
+                    </Suspense>}
 
                 </Container>
             </div>

@@ -7,7 +7,7 @@ const CardComponent = (props) => {
     const {article} = props;
     return (
         <Card>
-            <Card.Img variant="top" src={article.urlToImage}/>
+            <div className={'card-image-wrapper'}><Card.Img variant="top" src={article.urlToImage}/></div>
             <Card.Body>
                 <Card.Link href={article.url}>
                     <Card.Title>{article.title}</Card.Title>

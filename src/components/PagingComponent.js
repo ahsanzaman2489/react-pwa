@@ -1,6 +1,8 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import queryString, {stringify} from "query-string";
+import Pagination from "react-js-pagination";
+
 
 /**
  * Paging component renders pagination of list.
@@ -20,27 +22,30 @@ const PagingComponent = (props) => {
         return (url + "?" + newQuery);
     };
 
-    const {totalPageCount, location, url} = props;
+    const handlePageChange = (pageNumber, history, url) => {
+        const parsed = queryString.parse(history.location.search);
+
+        parsed.page = pageNumber;
+        const stringify = queryString.stringify(parsed);
+
+        history.push(url + '?' + stringify);
+    };
+
+    const {location, url, totalItemsCount, itemsCountPerPage, history} = props;
     const currentParams = queryString.parse(location.search);
     const currentPage = parseInt(currentParams.page, 10) || 1;
+
     return (
-        <div className="pagination">
-            <ul>
-                <li><NavLink to={renderPaginationLink(url, currentParams, 1)}
-                             className={currentPage === 1 ? 'disabled' : ''}>first</NavLink></li>
-                <li><NavLink
-                    to={renderPaginationLink(url, currentParams, currentPage - 1)}
-                    className={currentPage === 1 ? 'disabled' : ''}>previous</NavLink>
-                </li>
-                <li><span>page {currentPage} of {totalPageCount}</span></li>
-                <li><NavLink to={renderPaginationLink(url, currentParams, currentPage + 1)}
-                             className={currentPage === totalPageCount ? 'disabled' : ''}>next</NavLink>
-                </li>
-                <li><NavLink to={renderPaginationLink(url, currentParams, totalPageCount)}
-                             className={currentPage === totalPageCount ? 'disabled' : ''}>last</NavLink>
-                </li>
-            </ul>
-        </div>
+        <div className={'text-center'}>
+            <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={itemsCountPerPage}
+                totalItemsCount={totalItemsCount}
+                pageRangeDisplayed={15}
+                onChange={page => handlePageChange(page, history, url)}
+                linkClass={'page-link'}
+                itemClass={'page-item'}
+            /></div>
     );
 };
 
