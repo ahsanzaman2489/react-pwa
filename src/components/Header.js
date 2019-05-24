@@ -4,7 +4,6 @@ import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
 
 
 const HeaderComponent = (props) => {
-
     const {src} = props;
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
 
@@ -27,6 +26,8 @@ const HeaderComponent = (props) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
+                        <NavLink exact={true} activeClassName='active' to={'/home'}
+                                 className={'nav-link'}>home</NavLink>
                         {renderCategories(categories)}
                     </Nav>
                     <Nav>

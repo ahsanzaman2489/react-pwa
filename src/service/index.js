@@ -4,7 +4,7 @@ import * as config from '../constants/app';
 const newsService = () => {
 
     const fetch = (endPoint, query = "", method = "get") => {
-        return axios(config.HOST + config.HOST_PORT + endPoint + "?apiKey=" + config.API_KEY + query, {
+        return axios(config.HOST + config.HOST_PORT + endPoint + "?" + query + "&apiKey=" + config.API_KEY, {
             method: method,
             mode: 'cors'
         });

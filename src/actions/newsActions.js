@@ -10,11 +10,16 @@ const serviceHandler = (endPoint, query, dispatch, actionType) => {
 };
 
 export const fetchHeadLines = (endPoint, query) => (dispatch) => {
-    dispatch({type: actionTypes.ACTION_LOADING, isLoading: true});
+    dispatch({type: actionTypes.HEADLINE_LOADING, isLoading: true});
     serviceHandler(endPoint, query, dispatch, actionTypes.HEADLINE_LIST);
 };
 
 export const fetchNewsSources = (endPoint, query) => (dispatch) => {
-    dispatch({type: actionTypes.ACTION_LOADING, isLoading: true});
+    dispatch({type: actionTypes.SOURCE_LOADING, isLoading: true});
     serviceHandler(endPoint, query, dispatch, actionTypes.SOURCES_LIST);
+};
+
+export const fetchNews = (endPoint, query) => (dispatch) => {
+    dispatch({type: actionTypes.NEWS_LOADING, isLoading: true});
+    serviceHandler(endPoint, query, dispatch, actionTypes.NEWS_LIST);
 };

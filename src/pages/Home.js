@@ -1,46 +1,29 @@
-import React, {Component} from 'react';
+import React, {Component, lazy, Suspense} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as NewsActions from '../actions/newsActions';
-import {CardColumns, Card, Container} from 'react-bootstrap';
-import * as moment from 'moment';
+import {CardColumns, Container} from 'react-bootstrap';
+
 
 // import {NO_DATA} from '../../constants/app';
 
+const CardComponent = lazy(() => import("../components/CardComponent"));
 
 class HomePage extends Component {
 
     componentDidMount() {
-        this.props.fetchHeadLines('top-headlines', '&country=us');
+        this.props.fetchHeadLines('top-headlines', 'country=us');
     }
 
     render() {
         const {headlines} = this.props;
-        console.log(this.props)
         const renderHeadLines = (data) => {
 
             return data.articles.map((article, index) => {
                 return (
-                    <Card key={index}>
-                        <Card.Img variant="top" src={article.urlToImage}/>
-                        <Card.Body>
-                            <Card.Link href={article.url}>
-                                <Card.Title>{article.title}</Card.Title>
-                            </Card.Link>
-                            {article.author && <footer className="blockquote-footer">
-                                <cite title="Source Title"> {article.author} </cite>
-                            </footer>}
-                            <Card.Text>
-                                {article.description}
-                            </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-
-                            <small
-                                className="text-muted">{moment(article.publishedAt).format('D MMM YYYY  hh:mm:ss A')}</small>
-                        </Card.Footer>
-                    </Card>
-
+                    <Suspense fallback={<div>Loading...</div>} key={index}>
+                        <CardComponent article={article}/>
+                    </Suspense>
                 )
             })
         };
@@ -56,7 +39,6 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         headlines: state.headlineReducers,
     };

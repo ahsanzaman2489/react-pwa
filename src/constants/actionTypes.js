@@ -1,3 +1,7 @@
-export const ACTION_LOADING = 'ACTION_LOADING';
+export const NEWS_LOADING = 'NEWS_LOADING';
+export const SOURCE_LOADING = 'SOURCE_LOADING';
+export const HEADLINE_LOADING = 'HEADLINE_LOADING';
+
 export const HEADLINE_LIST = 'HEADLINE_LIST';
 export const SOURCES_LIST = 'SOURCES_LIST';
+export const NEWS_LIST = 'NEWS_LIST';
