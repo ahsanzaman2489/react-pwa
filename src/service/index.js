@@ -12,7 +12,7 @@ let configObj = {};
 configObj.cache = {
     maxAge: 24 * 60 * 60 * 1000,
     store: localStorageStore,
-    debug: true,
+    debug: false,
     exclude: {
         query: false
     },

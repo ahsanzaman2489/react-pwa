@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as NewsActions from '../actions/newsActions';
 import * as qs from 'query-string';
-import {CardColumns, Container} from "react-bootstrap";
+import {CardColumns, Container, Form, Row, Col, Button} from "react-bootstrap";
 
 // import {NO_DATA} from '../../constants/app';
 
@@ -62,9 +62,21 @@ export class NewsPage extends Component {
         fetchNews('everything', nextLocation.search + '&sources=' + sources.join());
     };
 
+    sortHandler = (event) => {
+        const {fetchNews,location} = this.props;
+        const parsed = qs.parse(location.search);
+        parsed.sortBy = event.target.value;
+        fetchNews('everything', +'&sources=' + qs.stringify(parsed));
+    };
+
 
     render() {
-        const {news, location,history} = this.props;
+        const {news, location, history} = this.props;
+        const sortingType = [
+            {name: "Newest", val: "publishedAt"},
+            {name: 'Relevant ', val: 'relevancy'},
+            {name: 'Most popular', val: 'popularity'}
+        ];
         const renderNews = (data) => {
 
             return data.map((article, index) => {
@@ -75,20 +87,37 @@ export class NewsPage extends Component {
                 )
             })
         };
-        return (
 
+        return (
             <div className="car-detail">
                 <Container>
                     <h1 className={'text-center'}>News in {qs.parse(this.props.location.search).category}</h1>
-                    <CardColumns>
-                        {news.data && renderNews(news.data.articles)}
-                    </CardColumns>
-                    {news.data && <Suspense fallback={<div>Loading...</div>}>
-                        <PagingComponent location={location} url={'/news'} totalItemsCount={news.data.totalResults}
-                                         itemsCountPerPage={20}
-                                         history={history}
-                        />
-                    </Suspense>}
+                    <Row>
+                        <Col sm={2}>
+                            <Form>
+                                <Form.Group as={Col} controlId="formGridState">
+                                    <Form.Label>Sort</Form.Label>
+                                    <Form.Control as="select" onChange={this.sortHandler}>
+                                        {sortingType.map((item, index) => <option value={item.val}
+                                                                                  key={index}>{item.name}</option>)}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Form>
+                        </Col>
+                        <Col sm={10}>
+                            <CardColumns>
+                                {news.data && renderNews(news.data.articles)}
+                            </CardColumns>
+                            {news.data && <Suspense fallback={<div>Loading...</div>}>
+                                <PagingComponent location={location} url={'/news'}
+                                                 totalItemsCount={news.data.totalResults}
+                                                 itemsCountPerPage={20}
+                                                 history={history}
+                                />
+                            </Suspense>}
+                        </Col>
+                    </Row>
+
 
                 </Container>
             </div>

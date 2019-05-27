@@ -36,7 +36,7 @@ const HeaderComponent = (props) => {
             <div className={'loading-bar-wrapper'}><LoadingBar
                 progress={loadingProgress}
                 height={3}
-                color="red"
+                color="white"
                 className={'loading-bar'}
                 onLoaderFinished={() => onLoaderFinished()}
             /></div>
