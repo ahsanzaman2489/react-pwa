@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 import queryString, {stringify} from "query-string";
 import Pagination from "react-js-pagination";
 

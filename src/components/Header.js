@@ -1,20 +1,22 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
+import * as qs from 'query-string';
 
 
 const HeaderComponent = (props) => {
     const {src} = props;
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
 
-    const isActive = (match, location, path, query) => {
-        return path === location.pathname && query === location.search;
+    const isActive = (match, location, path, category) => {
+        const parsed = qs.parse(location.search);
+        return path === location.pathname && category === parsed.category;
     };
 
     const renderCategories = (categories) => {
         return categories.map((category, index) => <li key={index}>
             <NavLink to={'/news?category=' + category}
-                     isActive={(match, location) => isActive(match, location, '/news', '?category=' + category)}
+                     isActive={(match, location) => isActive(match, location, '/news', category)}
                      className={'nav-link'}>{category}</NavLink>
         </li>)
     };
