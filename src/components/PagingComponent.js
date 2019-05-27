@@ -28,6 +28,7 @@ const PagingComponent = (props) => {
         const stringify = queryString.stringify(parsed);
 
         history.push(url + '?' + stringify);
+        window.scrollTo(0, 0);
     };
 
     const {location, url, totalItemsCount, itemsCountPerPage, history} = props;

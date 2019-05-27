@@ -64,7 +64,6 @@ export class NewsPage extends Component {
 
 
     render() {
-        console.log(this.props)
         const {news, location,history} = this.props;
         const renderNews = (data) => {
 
@@ -80,6 +79,7 @@ export class NewsPage extends Component {
 
             <div className="car-detail">
                 <Container>
+                    <h1 className={'text-center'}>News in {qs.parse(this.props.location.search).category}</h1>
                     <CardColumns>
                         {news.data && renderNews(news.data.articles)}
                     </CardColumns>

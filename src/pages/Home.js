@@ -30,6 +30,7 @@ class HomePage extends Component {
 
         return (
             <Container>
+                <h1 className={'text-center'}>Top Headlines</h1>
                 <CardColumns>
                     {headlines.articles && renderHeadLines(headlines)}
                 </CardColumns>

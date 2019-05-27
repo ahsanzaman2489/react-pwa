@@ -3,10 +3,12 @@ import newsService from '../service';
 
 const service = newsService();
 
-const serviceHandler = (endPoint, query, dispatch, actionType) => {
-    return service.fetch(endPoint, query).then((payload) => {
-        dispatch({type: actionType, payload: payload.data});
-    });
+const serviceHandler = async (endPoint, query, dispatch, actionType) => {
+    dispatch({type: actionTypes.LOADING});
+    const response = await service.fetch(endPoint, query);
+    dispatch({type: actionType, payload: response.data});
+    dispatch({type: actionTypes.LOADING_DONE});
+
 };
 
 export const fetchHeadLines = (endPoint, query) => (dispatch) => {
@@ -16,6 +18,7 @@ export const fetchHeadLines = (endPoint, query) => (dispatch) => {
 
 export const fetchNewsSources = (endPoint, query) => (dispatch) => {
     dispatch({type: actionTypes.SOURCE_LOADING, isLoading: true});
+
     serviceHandler(endPoint, query, dispatch, actionTypes.SOURCES_LIST);
 };
 

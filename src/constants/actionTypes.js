@@ -1,3 +1,6 @@
+export const LOADING = 'LOADING';
+export const LOADING_DONE = 'LOADING_DONE';
+
 export const NEWS_LOADING = 'NEWS_LOADING';
 export const SOURCE_LOADING = 'SOURCE_LOADING';
 export const HEADLINE_LOADING = 'HEADLINE_LOADING';
