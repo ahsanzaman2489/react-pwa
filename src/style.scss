@@ -40,10 +40,19 @@ span.lazy-load-image-background {
   }
 }
 
-.loading-bar-wrapper{
+.loading-bar-wrapper {
   position: absolute;
   z-index: 99999999999;
   left: 0;
-  top: 0;
+  top: 68.42px;
   right: 0;
+
+  .loading-bar {
+    top: 68.42px;
+  }
+}
+
+.pagination {
+  margin-top: 20px;
+  justify-content: center;
 }

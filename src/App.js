@@ -11,7 +11,8 @@ import HomePage from "./pages/Home";
 import NewsPage from "./pages/News";
 
 
- const App = () => {
+const App = () => {
+
     return (
         <div>
             <Router>
@@ -20,8 +21,6 @@ import NewsPage from "./pages/News";
                     <Redirect exact from="/" to="/home"/>
                     <Route exact path={'/home'} component={HomePage}/>
                     <Route exact path={'/news'} component={NewsPage}/>
-                    {/*<Route path={'/cars/detail/:stockNumber'} component={CarDetailContainer}/>*/}
-                    {/*<Route path="*" component={NotFoundComponent}/>*/}
                 </Switch>
                 {/*<Footer/>*/}
             </Router>

@@ -31,12 +31,12 @@ const PagingComponent = (props) => {
         window.scrollTo(0, 0);
     };
 
-    const {location, url, totalItemsCount, itemsCountPerPage, history} = props;
+    const {location, url, totalItemsCount, itemsCountPerPage, history, currentItemLenght} = props;
     const currentParams = queryString.parse(location.search);
     const currentPage = parseInt(currentParams.page, 10) || 1;
-
     return (
         <div className={'text-center'}>
+            {currentItemLenght * currentPage} out of {totalItemsCount}
             <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={itemsCountPerPage}

@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as NewsActions from '../actions/newsActions';
 import * as qs from 'query-string';
-import {CardColumns, Container, Form, Row, Col, Button} from "react-bootstrap";
+import {NO_DATA} from '../constants/app'
+import {CardColumns, Container, Form, Row, Col, FormControl, Button, Nav} from "react-bootstrap";
 
 // import {NO_DATA} from '../../constants/app';
 
@@ -44,6 +45,7 @@ export class NewsPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
         const {location, fetchNewsSources, sources} = nextProps;
         const query = qs.parse(location.search);
 
@@ -59,14 +61,30 @@ export class NewsPage extends Component {
 
     getNewPerSource = (sources, nextLocation) => {
         const {fetchNews} = this.props;
-        fetchNews('everything', nextLocation.search + '&sources=' + sources.join());
+        const parsed = qs.parse(nextLocation.search);
+        delete parsed.category;
+        parsed.sources = sources;
+        fetchNews('everything', qs.stringify(parsed, {arrayFormat: 'comma'}));
     };
 
-    sortHandler = (event) => {
-        const {fetchNews,location} = this.props;
-        const parsed = qs.parse(location.search);
-        parsed.sortBy = event.target.value;
-        fetchNews('everything', +'&sources=' + qs.stringify(parsed));
+    formSubmitHandler = (e) => {
+        e.preventDefault();
+        const {history} = this.props;
+        const searchValue = e.target.search.value;
+        const parsed = qs.parse(history.location.search);
+
+        parsed.sortBy = e.target.sort.value;
+        if (searchValue.length > 0) {
+            parsed.q = searchValue
+        } else {
+            delete parsed.q;
+        }
+
+        history.push({
+            pathname: '/news',
+            search: '?' + qs.stringify(parsed),
+        });
+
     };
 
 
@@ -88,19 +106,37 @@ export class NewsPage extends Component {
             })
         };
 
+        const isNews = (news.data && news.data.totalResults !== 0);
+        const parsed = qs.parse(location.search);
+
         return (
             <div className="car-detail">
                 <Container>
                     <h1 className={'text-center'}>News in {qs.parse(this.props.location.search).category}</h1>
+                    {isNews && parsed.q &&
+                    <p className={'text-center'}>showing results in "{parsed.q}"</p>
+                    }
+                    {
+                        (news.data && news.data.totalResults === 0) &&
+                        <p className={'text-center'}>{NO_DATA} in "{parsed.q}"</p>
+                    }
                     <Row>
                         <Col sm={2}>
-                            <Form>
+                            <Form onSubmit={this.formSubmitHandler}>
+                                <Form.Group as={Col} controlId="formGridState">
+                                    <Form.Label>Search</Form.Label>
+                                    <FormControl type="text" placeholder="Search" name="search" className="mr-sm-2"/>
+                                </Form.Group>
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>Sort</Form.Label>
-                                    <Form.Control as="select" onChange={this.sortHandler}>
+                                    <Form.Control as="select" name="sort">
                                         {sortingType.map((item, index) => <option value={item.val}
                                                                                   key={index}>{item.name}</option>)}
                                     </Form.Control>
+                                </Form.Group>
+
+                                <Form.Group as={Col} controlId="formGridState">
+                                    <Button variant="primary" type="submit">submit</Button>
                                 </Form.Group>
                             </Form>
                         </Col>
@@ -108,13 +144,16 @@ export class NewsPage extends Component {
                             <CardColumns>
                                 {news.data && renderNews(news.data.articles)}
                             </CardColumns>
-                            {news.data && <Suspense fallback={<div>Loading...</div>}>
+                            {isNews && <Suspense fallback={<div>Loading...</div>}>
                                 <PagingComponent location={location} url={'/news'}
                                                  totalItemsCount={news.data.totalResults}
                                                  itemsCountPerPage={20}
                                                  history={history}
+                                                 currentItemLenght={news.data.articles.length}
                                 />
                             </Suspense>}
+
+
                         </Col>
                     </Row>
 

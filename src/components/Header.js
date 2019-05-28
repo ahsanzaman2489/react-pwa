@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
 import * as qs from 'query-string';
 import LoadingBar from 'react-top-loading-bar';
@@ -7,7 +7,8 @@ import {connect} from "react-redux";
 
 
 const HeaderComponent = (props) => {
-    const {src, pageLoading} = props;
+    const {src, pageLoading, history} = props;
+
     let loadingProgress = 0;
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
 
@@ -23,8 +24,23 @@ const HeaderComponent = (props) => {
                      className={'nav-link'}>{category}</NavLink>
         </li>)
     };
+
     const onLoaderFinished = () => {
         loadingProgress = 0;
+    };
+
+    const formSubmitHandler = (e) => {
+        e.preventDefault();
+        const searchValue = e.target.search.value;
+        const parsed = qs.parse(history.location.search);
+
+        if (searchValue.length > 0) parsed.q = searchValue;
+
+        history.push({
+            pathname: '/news',
+            search: '?' + qs.stringify(parsed),
+        });
+
     };
 
     if (pageLoading) loadingProgress = loadingProgress + 35;
@@ -36,7 +52,7 @@ const HeaderComponent = (props) => {
             <div className={'loading-bar-wrapper'}><LoadingBar
                 progress={loadingProgress}
                 height={3}
-                color="white"
+                color="red"
                 className={'loading-bar'}
                 onLoaderFinished={() => onLoaderFinished()}
             /></div>
@@ -50,12 +66,6 @@ const HeaderComponent = (props) => {
                                  className={'nav-link'}>home</NavLink>
                         {renderCategories(categories)}
                     </Nav>
-                    <Nav>
-                        <Form inline>
-                            <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-                            <Button variant="outline-light">Search</Button>
-                        </Form>
-                    </Nav>
                 </Navbar.Collapse>
             </Navbar>
         </header>
@@ -68,4 +78,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(HeaderComponent);
+export default withRouter(connect(mapStateToProps)(HeaderComponent));
