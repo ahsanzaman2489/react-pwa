@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
 import * as moment from "moment";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 import placeholder from '../images/placeholder.png'
 
 
@@ -32,8 +32,7 @@ const CardComponent = (props) => {
             </Card.Body>
             <Card.Footer>
 
-                <small
-                    className="text-muted">{moment(article.publishedAt).format('D MMM YYYY  hh:mm:ss A')}</small>
+                <small className="text-muted">{moment(article.publishedAt).format('D MMM YYYY  hh:mm:ss A')}</small>
             </Card.Footer>
         </Card>
     );

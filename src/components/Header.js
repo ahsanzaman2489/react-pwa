@@ -1,12 +1,12 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
-import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
+import {Navbar, Nav} from 'react-bootstrap';
 import * as qs from 'query-string';
 import LoadingBar from 'react-top-loading-bar';
 import {connect} from "react-redux";
 
 
-const HeaderComponent = (props) => {
+export const HeaderComponent = (props) => {
     const {src, pageLoading, history} = props;
 
     let loadingProgress = 0;

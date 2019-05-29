@@ -9,7 +9,7 @@ import {CardColumns, Container} from 'react-bootstrap';
 
 const CardComponent = lazy(() => import("../components/CardComponent"));
 
-class HomePage extends Component {
+export class HomePage extends Component {
 
     componentDidMount() {
         this.props.fetchHeadLines('top-headlines', 'country=us');
