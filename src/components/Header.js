@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 
 
 export const HeaderComponent = (props) => {
-    const {src, pageLoading, history} = props;
+    const {src, pageLoading} = props;
 
     let loadingProgress = 0;
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
@@ -27,20 +27,6 @@ export const HeaderComponent = (props) => {
 
     const onLoaderFinished = () => {
         loadingProgress = 0;
-    };
-
-    const formSubmitHandler = (e) => {
-        e.preventDefault();
-        const searchValue = e.target.search.value;
-        const parsed = qs.parse(history.location.search);
-
-        if (searchValue.length > 0) parsed.q = searchValue;
-
-        history.push({
-            pathname: '/news',
-            search: '?' + qs.stringify(parsed),
-        });
-
     };
 
     if (pageLoading) loadingProgress = loadingProgress + 35;

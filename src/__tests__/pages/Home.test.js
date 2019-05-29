@@ -22,14 +22,22 @@ beforeEach(() => {
     wrapper = setupWrapper.wrapper;
     props = setupWrapper.props;
 });
+
+afterEach(() => {
+    wrapper.unmount();
+});
+
 describe("Home component", () => {
     it('Should render', () => {
-        console.log(wrapper.debug())
-        expect(wrapper.find('CardColumns').length).toBe(1)
-        expect(wrapper.find('h1').length).toBe(1)
-
-        expect(props.fetchHeadLines).toHaveBeenCalled()
-        expect(props.fetchHeadLines).toHaveBeenCalledTimes(1);
+        expect(wrapper.find('CardColumns').length).toBe(1);
+        expect(wrapper.find('h1').length).toBe(1);
     });
+
+    it('componentDidMount Should call top headline actions to fetch', () => {
+        expect(props.fetchHeadLines).toHaveBeenCalled();
+        expect(props.fetchHeadLines).toHaveBeenCalledTimes(1);
+        expect(props.fetchHeadLines).toHaveBeenCalledWith('top-headlines', 'country=us');
+    });
+
 });
 
