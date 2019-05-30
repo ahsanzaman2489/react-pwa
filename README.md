@@ -1,7 +1,7 @@
-#chalhoub group Test
+# chalhoub group Test
 Front end developer test for chalhoub group
 
-##Stack
+## Stack
 * React 16x
 * Redux
 * Es6
@@ -11,17 +11,17 @@ Front end developer test for chalhoub group
 * jest 
 * Enzyme
 
-##Features
+## Features
 * Single page application
 * State management
 * Progressive web app
 * Api Cached
 * Static content Cached
 
-##Unit Testing
+## Unit Testing
 * Snap shot and unit
 
-##Setup project and installing dependencies
+## Setup project and installing dependencies
 * `https://github.com/ahsanzaman2489/react-pwa.git` clone repository
 * `cd react-pwa` dive into cloned directory
 * `npm install` install dependencies
