@@ -35,12 +35,13 @@ const setup = (props = {}, state = null) => {
     return {wrapper, props: setUpProps, tree};
 };
 
-let wrapper, props;
+let wrapper, props,tree;
 
 beforeEach(() => {
     const setupWrapper = setup({}, {query: location.search, samePage: true});
     wrapper = setupWrapper.wrapper;
     props = setupWrapper.props;
+    tree = setupWrapper.tree;
 });
 
 afterEach(() => {
@@ -50,6 +51,10 @@ afterEach(() => {
 describe("News component", () => {
     it('Should render', () => {
         expect(wrapper.find('.news-detail').length).toBe(1);
+    });
+
+    it('should match with snapshot', () => {
+        expect(tree()).toMatchSnapshot();
     });
 
     it('componentDidMount Should call new actions to fetch with category', () => {
@@ -110,35 +115,6 @@ describe("News component", () => {
         expect(props.fetchNews).toBeCalledWith('everything', 'page=2&sources=' + props.sources.data.join());
     });
 
-
-    it('Form submit handler will trigger when submit', () => {
-
-
-        wrapper.find('Form').simulate('submit', {
-            target: {search: {value: 'trump'}, sort: {value: 'relevancy'}},
-            preventDefault: () => {
-            }
-        });
-
-        expect(props.history.push).toBeCalled();
-        expect(props.history.push).toBeCalledWith({
-            pathname: '/news',
-            search: "?" + props.history.location.search + '&q=trump&sortBy=relevancy',
-        });
-
-        wrapper.find('Form').simulate('submit', {
-            target: {search: {value: ""}, sort: {value: 'relevancy'}},
-            preventDefault: () => {
-            }
-        });
-
-        expect(props.history.push).toBeCalled();
-        expect(props.history.push).toBeCalledWith({
-            pathname: '/news',
-            search: "?" + props.history.location.search + '&sortBy=relevancy',
-        });
-
-    });
 
 
 });

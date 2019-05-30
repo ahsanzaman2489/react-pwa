@@ -15,12 +15,13 @@ const setup = (props = {}, state = null) => {
     return {wrapper, props: setUpProps, tree}
 };
 
-let wrapper, props;
+let wrapper, props, tree;
 
 beforeEach(() => {
     const setupWrapper = setup();
     wrapper = setupWrapper.wrapper;
     props = setupWrapper.props;
+    tree = setupWrapper.tree;
 });
 
 afterEach(() => {
@@ -28,6 +29,9 @@ afterEach(() => {
 });
 
 describe("Home component", () => {
+    it('should match with snapshot', () => {
+        expect(tree()).toMatchSnapshot();
+    });
     it('Should render', () => {
         expect(wrapper.find('CardColumns').length).toBe(1);
         expect(wrapper.find('h1').length).toBe(1);

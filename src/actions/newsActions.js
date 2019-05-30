@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
 import {newsService} from '../service';
-console.log(newsService)
+
 const service = newsService();
 
 const serviceHandler = async (endPoint, query, dispatch, actionType) => {
@@ -18,7 +18,6 @@ export const fetchHeadLines = (endPoint, query) => (dispatch) => {
 
 export const fetchNewsSources = (endPoint, query) => (dispatch) => {
     dispatch({type: actionTypes.SOURCE_LOADING, isLoading: true});
-
     serviceHandler(endPoint, query, dispatch, actionTypes.SOURCES_LIST);
 };
 

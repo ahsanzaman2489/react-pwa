@@ -42,7 +42,7 @@ export class NewsPage extends Component {
         if (this.state.category !== query.category) {
             fetchNewsSources('sources', 'category=' + query.category);
             this.setState({category: query.category, query: location.search})
-        } else if (this.state.query !== location.search && (this.state.category === query.category) || (sources.data && sources.data.length > 0 && !this.arraysEqual(this.props.sources.data, sources.data))) {
+        } else if ((this.state.query !== location.search && (this.state.category === query.category)) || (sources.data && sources.data.length > 0 && !this.arraysEqual(this.props.sources.data, sources.data))) {
             this.getNewPerSource(sources.data, location);
             this.setState({query: location.search})
         }

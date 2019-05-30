@@ -1,4 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#chalhoub group Test
+Front end developer test for chalhoub group
+
+##Stack
+* React 16x
+* Redux
+* Es6
+* React bootstrap
+* Create react app
+* Axios
+* jest 
+* Enzyme
+
+##Features
+* Single page application
+* State management
+* Progressive web app
+* Api Cached
+* Static content Cached
+
+##Unit Testing
+* Snap shot and unit
+
+##Setup project and installing dependencies
+* `https://github.com/ahsanzaman2489/react-pwa.git` clone repository
+* `cd react-pwa` dive into cloned directory
+* `npm install` install dependencies
+
 
 ## Available Scripts
 
@@ -7,7 +34,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[http://localhost:3000](http://localhost:3000) Automatically it will open page in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
@@ -16,6 +43,12 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm test:coverage`
+
+Launches the test coverage and create coverage folder on the root.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
 
 ### `npm run build`
 
