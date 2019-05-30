@@ -1,5 +1,5 @@
 import React from 'react';
-import queryString, {stringify} from "query-string";
+import queryString from "query-string";
 import Pagination from "react-js-pagination";
 
 
@@ -13,13 +13,6 @@ import Pagination from "react-js-pagination";
 
 
 const PagingComponent = (props) => {
-
-    const renderPaginationLink = (url, currentParams, page) => {
-        if (page === 0) page = 1;
-        currentParams.page = page;
-        const newQuery = stringify(currentParams, {encode: false});
-        return (url + "?" + newQuery);
-    };
 
     const handlePageChange = (pageNumber, history, url) => {
         const parsed = queryString.parse(history.location.search);

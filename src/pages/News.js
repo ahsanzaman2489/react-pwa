@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as NewsActions from '../actions/newsActions';
 import * as qs from 'query-string';
 import {NO_DATA} from '../constants/app'
-import {CardColumns, Container, Form, Row, Col, FormControl, Button, Nav} from "react-bootstrap";
+import {CardColumns, Container, Form, Row, Col, FormControl, Button} from "react-bootstrap";
 
 // import {NO_DATA} from '../../constants/app';
 
@@ -15,7 +15,6 @@ export class NewsPage extends Component {
     state = {
         category: qs.parse(this.props.location.search).category,
         query: this.props.location.search,
-        samePage: false,
     };
 
     componentDidMount() {
@@ -27,7 +26,7 @@ export class NewsPage extends Component {
     arraysEqual = (a, b) => {
         if (a === b) return true;
         if (a == null || b == null) return false;
-        if (a.length != b.length) return false;
+        if (a.length !== b.length) return false;
 
         for (var i = 0; i < a.length; ++i) {
             if (a[i] !== b[i]) return false;
@@ -35,26 +34,17 @@ export class NewsPage extends Component {
         return true;
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {sources} = this.props;
-
-        if ((sources.data && sources.data.length > 0 && !this.arraysEqual(prevProps.sources.data, sources.data)) && !this.state.samePage) {
-            this.getNewPerSource(this.props.sources.data, this.props.location);
-        }
-
-    }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         const {location, fetchNewsSources, sources} = nextProps;
         const query = qs.parse(location.search);
 
         if (this.state.category !== query.category) {
             fetchNewsSources('sources', 'category=' + query.category);
-            this.setState({category: query.category, query: location.search, samePage: false})
-        } else if (this.state.query !== location.search && (this.state.category === query.category)) {
+            this.setState({category: query.category, query: location.search})
+        } else if ((this.state.query !== location.search && (this.state.category === query.category)) || (sources.data && sources.data.length > 0 && !this.arraysEqual(this.props.sources.data, sources.data))) {
             this.getNewPerSource(sources.data, location);
-            this.setState({query: location.search, samePage: true})
+            this.setState({query: location.search})
         }
     }
 
@@ -110,7 +100,7 @@ export class NewsPage extends Component {
         const parsed = qs.parse(location.search);
 
         return (
-            <div className="car-detail">
+            <div className="news-detail">
                 <Container>
                     <h1 className={'text-center'}>News in {qs.parse(this.props.location.search).category}</h1>
                     {isNews && parsed.q &&

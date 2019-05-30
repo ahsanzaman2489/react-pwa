@@ -20,7 +20,7 @@ configObj.cache = {
 };
 const api = setup(configObj);
 
-const newsService = () => {
+export const newsService = () => {
 
     const fetch = async (endPoint, query = "", method = "get") => {
         const options = {
@@ -34,4 +34,3 @@ const newsService = () => {
     };
     return {fetch}
 };
-export default newsService;

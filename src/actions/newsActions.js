@@ -1,5 +1,5 @@
 import * as actionTypes from '../constants/actionTypes';
-import newsService from '../service';
+import {newsService} from '../service';
 
 const service = newsService();
 
@@ -18,7 +18,6 @@ export const fetchHeadLines = (endPoint, query) => (dispatch) => {
 
 export const fetchNewsSources = (endPoint, query) => (dispatch) => {
     dispatch({type: actionTypes.SOURCE_LOADING, isLoading: true});
-
     serviceHandler(endPoint, query, dispatch, actionTypes.SOURCES_LIST);
 };
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import './style.scss';
@@ -21,8 +21,8 @@ const App = () => {
                     <Redirect exact from="/" to="/home"/>
                     <Route exact path={'/home'} component={HomePage}/>
                     <Route exact path={'/news'} component={NewsPage}/>
+                    <Route path="*" render={() => <h1>not found</h1>}/>
                 </Switch>
-                {/*<Footer/>*/}
             </Router>
         </div>
     )
