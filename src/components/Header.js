@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 
 export const HeaderComponent = (props) => {
     const {src, pageLoading} = props;
+    console.log(props)
 
     let loadingProgress = 0;
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
@@ -35,13 +36,14 @@ export const HeaderComponent = (props) => {
 
     return (
         <header>
-            <div className={'loading-bar-wrapper'}><LoadingBar
+            {pageLoading !== undefined && <div className={'loading-bar-wrapper'}><LoadingBar
                 progress={loadingProgress}
                 height={3}
                 color="red"
                 className={'loading-bar'}
                 onLoaderFinished={() => onLoaderFinished()}
             /></div>
+            }
 
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand><NavLink to={'/'}><img src={src} alt="" width="60"/></NavLink></Navbar.Brand>

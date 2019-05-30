@@ -21,8 +21,8 @@ const App = () => {
                     <Redirect exact from="/" to="/home"/>
                     <Route exact path={'/home'} component={HomePage}/>
                     <Route exact path={'/news'} component={NewsPage}/>
+                    <Route path="*" render={() => <h1>not found</h1>}/>
                 </Switch>
-                {/*<Footer/>*/}
             </Router>
         </div>
     )
