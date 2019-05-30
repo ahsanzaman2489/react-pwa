@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
-import newsService from '../service';
-
+import {newsService} from '../service';
+console.log(newsService)
 const service = newsService();
 
 const serviceHandler = async (endPoint, query, dispatch, actionType) => {

@@ -1,14 +1,25 @@
 import React from 'react';
-import {shallow, mount} from 'enzyme/build';
+import {shallow} from 'enzyme/build';
 import {NewsPage} from '../../pages/News';
 
 
 const setup = (props = {}, state = null) => {
     const defaultProps = {
         location: {search: "category=health"},
-        news: {data: {articles: []}},
+        news: {
+            data: {
+                articles: [{
+                    author: "https://www.facebook.com/DailyMail",
+                    title: "Four tiger poachers are killed in a Bangladesh mangrove after shootout with police"
+                }]
+            }
+        },
         fetchNewsSources: jest.fn(),
         fetchNews: jest.fn(),
+        history: {
+            location: {search: "category=health"},
+            push: jest.fn()
+        },
         sources: {
             data: [
                 "argaam",
@@ -51,10 +62,23 @@ describe("News component", () => {
         const {arraysEqual} = wrapper.instance();
         expect(arraysEqual(['a', 'b'], ['a', 'b'])).toBeTruthy();
         expect(arraysEqual(['a', 'b'], ['a', 'c'])).toBeFalsy();
+        expect(arraysEqual(['a', 'b'], null)).toBeFalsy();
     });
 
 
-    it('componentDidUpdate should update component if category and sources change', () => {
+    it('componentWillReceiveProps should update component if URL will change with same category', () => {
+        const spyGetNewPerSource = jest.spyOn(wrapper.instance(), "getNewPerSource");
+
+        wrapper.setProps({
+            location: {search: "category=health&page=2"}
+        });
+
+        expect(spyGetNewPerSource).toBeCalled();
+        expect(spyGetNewPerSource).toBeCalledWith(props.sources.data, {search: "category=health&page=2"});
+
+    });
+
+    it('componentWillReceiveProps should update component if category change then fetch news accordingly', () => {
         const spyGetNewPerSource = jest.spyOn(wrapper.instance(), "getNewPerSource");
         const newData = {
             data: [
@@ -63,19 +87,59 @@ describe("News component", () => {
             ]
         };
         wrapper.setProps({
-            sources: newData,
             location: {search: "category=game"}
+        });
+
+        expect(props.fetchNewsSources).toBeCalled();
+        expect(props.fetchNewsSources).toBeCalledWith('sources', 'category=game');
+
+        wrapper.setProps({
+            sources: newData
         });
 
         expect(spyGetNewPerSource).toBeCalled();
         expect(spyGetNewPerSource).toBeCalledWith(newData.data, {search: "category=game"});
-        //
-        // expect(props.fetchNews).toBeCalled();
-        // expect(props.fetchNews).toBeCalledWith('everything', 'sources=' + [
-        //     "argaam",
-        //     "australian-financial-review",
-        // ]);
+
     });
+
+    it('getNewPerSource function call fetchnews with removed category from URL', () => {
+        const {getNewPerSource} = wrapper.instance();
+
+        getNewPerSource(props.sources.data, {search: "?category=sports&page=2"});
+        expect(props.fetchNews).toBeCalled();
+        expect(props.fetchNews).toBeCalledWith('everything', 'page=2&sources=' + props.sources.data.join());
+    });
+
+
+    it('Form submit handler will trigger when submit', () => {
+
+
+        wrapper.find('Form').simulate('submit', {
+            target: {search: {value: 'trump'}, sort: {value: 'relevancy'}},
+            preventDefault: () => {
+            }
+        });
+
+        expect(props.history.push).toBeCalled();
+        expect(props.history.push).toBeCalledWith({
+            pathname: '/news',
+            search: "?" + props.history.location.search + '&q=trump&sortBy=relevancy',
+        });
+
+        wrapper.find('Form').simulate('submit', {
+            target: {search: {value: ""}, sort: {value: 'relevancy'}},
+            preventDefault: () => {
+            }
+        });
+
+        expect(props.history.push).toBeCalled();
+        expect(props.history.push).toBeCalledWith({
+            pathname: '/news',
+            search: "?" + props.history.location.search + '&sortBy=relevancy',
+        });
+
+    });
+
 
 });
 

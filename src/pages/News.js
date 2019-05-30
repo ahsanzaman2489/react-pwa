@@ -15,7 +15,6 @@ export class NewsPage extends Component {
     state = {
         category: qs.parse(this.props.location.search).category,
         query: this.props.location.search,
-        samePage: false,
     };
 
     componentDidMount() {
@@ -35,14 +34,6 @@ export class NewsPage extends Component {
         return true;
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {sources} = this.props;
-
-        if ((sources.data && sources.data.length > 0 && !this.arraysEqual(prevProps.sources.data, sources.data)) && !this.state.samePage) {
-            this.getNewPerSource(this.props.sources.data, this.props.location);
-        }
-
-    }
 
     componentWillReceiveProps(nextProps) {
         const {location, fetchNewsSources, sources} = nextProps;
@@ -50,10 +41,10 @@ export class NewsPage extends Component {
 
         if (this.state.category !== query.category) {
             fetchNewsSources('sources', 'category=' + query.category);
-            this.setState({category: query.category, query: location.search, samePage: false})
-        } else if (this.state.query !== location.search && (this.state.category === query.category)) {
+            this.setState({category: query.category, query: location.search})
+        } else if (this.state.query !== location.search && (this.state.category === query.category) || (sources.data && sources.data.length > 0 && !this.arraysEqual(this.props.sources.data, sources.data))) {
             this.getNewPerSource(sources.data, location);
-            this.setState({query: location.search, samePage: true})
+            this.setState({query: location.search})
         }
     }
 

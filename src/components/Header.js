@@ -8,7 +8,6 @@ import {connect} from "react-redux";
 
 export const HeaderComponent = (props) => {
     const {src, pageLoading} = props;
-    console.log(props)
 
     let loadingProgress = 0;
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
